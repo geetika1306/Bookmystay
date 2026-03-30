@@ -4,22 +4,31 @@ import java.util.Map;
 import java.util.Queue;
 public class Bookmystay {
     public static void main(String[] args) {
-        System.out.println("Room Allocation Processing");
-        System.out.println("---------------------------");
+        System.out.println("Concurrent Booking Simulation\n");
 
-        // Setup Queue (from Use Case 5)
-        Queue<RoomReservation> bookingQueue = new LinkedList<>();
-        bookingQueue.add(new RoomReservation("Abhi", "Single"));
-        bookingQueue.add(new RoomReservation("Subha", "Single"));
-        bookingQueue.add(new RoomReservation("Vanmathi", "Single")); // This should fail as we only have 2
+        BookingRequestQueue bookingQueue = new BookingRequestQueue();
+        bookingQueue.addRequest(new RoomReservation("Abhi", "Single"));
+        bookingQueue.addRequest(new RoomReservation("Vanmathi", "Double"));
+        bookingQueue.addRequest(new RoomReservation("Kural", "Suite"));
+        bookingQueue.addRequest(new RoomReservation("Subha", "Single"));
 
-        // Setup Allocation Service
-        RoomAllocationService service = new RoomAllocationService();
+        RoomInventory inventory = new RoomInventory();
+        RoomAllocationService allocationService = new RoomAllocationService();
 
-        // Process requests in FIFO order
-        while (!bookingQueue.isEmpty()) {
-            service.processBooking(bookingQueue.poll());
+        Thread t1 = new Thread(new ConcurrentBookingProcessor(bookingQueue, inventory, allocationService));
+        Thread t2 = new Thread(new ConcurrentBookingProcessor(bookingQueue, inventory, allocationService));
+
+        t1.start();
+        t2.start();
+
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            System.out.println("Thread execution interrupted.");
         }
-        System.out.println("---------------------------");
+
+        System.out.println();
+        inventory.printRemainingInventory();
     }
 }

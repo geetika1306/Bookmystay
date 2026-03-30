@@ -1,28 +1,25 @@
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
 public class Bookmystay {
     public static void main(String[] args) {
-        System.out.println("Booking Request Queue\n");
+        System.out.println("Room Allocation Processing");
+        System.out.println("---------------------------");
 
-        // Initialize booking queue
-        BookingRequestQueue bookingQueue = new BookingRequestQueue();
+        // Setup Queue (from Use Case 5)
+        Queue<RoomReservation> bookingQueue = new LinkedList<>();
+        bookingQueue.add(new RoomReservation("Abhi", "Single"));
+        bookingQueue.add(new RoomReservation("Subha", "Single"));
+        bookingQueue.add(new RoomReservation("Vanmathi", "Single")); // This should fail as we only have 2
 
-        // Create booking requests (Arrival order: Abhi, Subha, Vanmathi)
-        RoomReservation r1 = new RoomReservation("Abhi", "Single");
-        RoomReservation r2 = new RoomReservation("Subha", "Double");
-        RoomReservation r3 = new RoomReservation("Vanmathi", "Suite");
+        // Setup Allocation Service
+        RoomAllocationService service = new RoomAllocationService();
 
-        // Add requests to the queue (FIFO - First In, First Out)
-        bookingQueue.addRequest(r1);
-        bookingQueue.addRequest(r2);
-        bookingQueue.addRequest(r3);
-
-        // Display queued booking requests in the order they arrived
-        int position = 1;
-        while (bookingQueue.hasPendingRequests()) {
-            RoomReservation current = bookingQueue.processNextRequest();
-            System.out.println("Processing Request #" + (position++) + ":");
-            System.out.println("Guest: " + current.getGuestName());
-            System.out.println("Room Type: " + current.getRoomType());
-            System.out.println("---------------------------");
+        // Process requests in FIFO order
+        while (!bookingQueue.isEmpty()) {
+            service.processBooking(bookingQueue.poll());
         }
+        System.out.println("---------------------------");
     }
 }

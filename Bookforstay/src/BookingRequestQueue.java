@@ -2,9 +2,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 class BookingRequestQueue {
-    private Queue<Reservation> queue = new LinkedList<>();
+    private Queue<RoomReservation> queue = new LinkedList<>();
 
-    public void addRequest(Reservation request) {
+    public void addRequest(RoomReservation request) {
         queue.add(request);
     }
 
@@ -12,7 +12,7 @@ class BookingRequestQueue {
         return !queue.isEmpty();
     }
 
-    public Reservation processNextRequest() {
+    public RoomReservation processNextRequest() {
         return queue.poll();
     }
 }

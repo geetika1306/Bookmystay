@@ -1,32 +1,20 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-
 public class Bookmystay {
+
     public static void main(String[] args) {
-        System.out.println("Add-On Service Selection");
-        System.out.println("---------------------------");
+        // Display application header
+        System.out.println("Booking History and Reporting\n");
 
-        AddOnServiceManager manager = new AddOnServiceManager();
+        BookingHistory history = new BookingHistory();
 
-        // Define available services
-        Service wifi = new Service("High-Speed WiFi", 15.0);
-        Service breakfast = new Service("Buffet Breakfast", 25.0);
-        Service spa = new Service("Spa Treatment", 100.0);
+        // Simulating confirmed bookings being added to history
+        history.addReservation(new RoomReservation("Abhi", "Single"));
+        history.addReservation(new RoomReservation("Subha", "Double"));
+        history.addReservation(new RoomReservation("Vanmathi", "Suite"));
 
-        // Simulation for a specific Reservation ID (e.g., from Use Case 6)
-        String resId = "Single-1";
-        System.out.println("Guest Reservation ID: " + resId);
-
-        // Guest selects services
-        manager.addService(resId, wifi);
-        manager.addService(resId, breakfast);
-
-        // Display results
-        System.out.println("Selected Add-Ons:");
-        manager.displaySelectedServices(resId);
-        System.out.println("---------------------------");
+        // Generate and display the report
+        BookingReportService reportService = new BookingReportService();
+        reportService.generateReport(history);
     }
 }

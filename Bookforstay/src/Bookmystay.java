@@ -1,7 +1,7 @@
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Queue;
+import java.util.Stack;
+
 public class Bookmystay {
     public static void main(String[] args) {
         System.out.println("Concurrent Booking Simulation\n");

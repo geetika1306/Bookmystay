@@ -1,25 +1,32 @@
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
-import java.util.Queue;
+
+
 public class Bookmystay {
     public static void main(String[] args) {
-        System.out.println("Room Allocation Processing");
+        System.out.println("Add-On Service Selection");
         System.out.println("---------------------------");
 
-        // Setup Queue (from Use Case 5)
-        Queue<RoomReservation> bookingQueue = new LinkedList<>();
-        bookingQueue.add(new RoomReservation("Abhi", "Single"));
-        bookingQueue.add(new RoomReservation("Subha", "Single"));
-        bookingQueue.add(new RoomReservation("Vanmathi", "Single")); // This should fail as we only have 2
+        AddOnServiceManager manager = new AddOnServiceManager();
 
-        // Setup Allocation Service
-        RoomAllocationService service = new RoomAllocationService();
+        // Define available services
+        Service wifi = new Service("High-Speed WiFi", 15.0);
+        Service breakfast = new Service("Buffet Breakfast", 25.0);
+        Service spa = new Service("Spa Treatment", 100.0);
 
-        // Process requests in FIFO order
-        while (!bookingQueue.isEmpty()) {
-            service.processBooking(bookingQueue.poll());
-        }
+        // Simulation for a specific Reservation ID (e.g., from Use Case 6)
+        String resId = "Single-1";
+        System.out.println("Guest Reservation ID: " + resId);
+
+        // Guest selects services
+        manager.addService(resId, wifi);
+        manager.addService(resId, breakfast);
+
+        // Display results
+        System.out.println("Selected Add-Ons:");
+        manager.displaySelectedServices(resId);
         System.out.println("---------------------------");
     }
 }

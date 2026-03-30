@@ -2,8 +2,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
-
-
 public class Bookmystay {
     public static void main(String[] args) {
         System.out.println("Room Allocation Processing");
